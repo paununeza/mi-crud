@@ -1,53 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import Form from './components/Form';
-import List from './components/List';
-import './App.css';
+import { useState, useEffect } from 'react'
+import StudentForm from './components/StudentForm'
+import StudentsTable from './components/StudentsTable'
+import AverageDisplay from './components/AverageDisplay'
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [itemToEdit, setItemToEdit] = useState(null);
+  const [students, setStudents] = useState(() => {
+    const saved = localStorage.getItem('students')
+    return saved ? JSON.parse(saved) : []
+  })
 
   useEffect(() => {
-    const storedItems =
-      JSON.parse(localStorage.getItem('items')) || [];
-    setItems(storedItems);
-  }, []);
+    localStorage.setItem('students', JSON.stringify(students))
+  }, [students])
 
-  useEffect(() => {
-    localStorage.setItem('items', JSON.stringify(items));
-  }, [items]);
+  const addStudent = (student) => {
+    setStudents([...students, student])
+  }
 
-  const addOrUpdateItem = (value) => {
-    if (itemToEdit) {
-      setItems(items.map(item => item.id === itemToEdit.id ? { ...item, value } : item));
-      setItemToEdit(null);
-    } else {
-      setItems([...items, { id: Date.now(), value }]);
-    }
-  };
+  const deleteStudent = (index) => {
+    const newStudents = [...students]
+    newStudents.splice(index, 1)
+    setStudents(newStudents)
+  }
 
-  const deleteItem = (id) => {
-    setItems(items.filter(item => item.id !== id));
-  };
-
-  const editItem = (item) => {
-    setItemToEdit(item);
-  };
+  const editStudent = (index, updatedStudent) => {
+    const newStudents = [...students]
+    newStudents[index] = updatedStudent
+    setStudents(newStudents)
+  }
 
   return (
-    <div className="App">
-      <h1>CRUD con LocalStorage</h1>
-      <Form
-        addOrUpdateItem={addOrUpdateItem}
-        itemToEdit={itemToEdit}
-      />
-      <List
-        items={items}
-        deleteItem={deleteItem}
-        editItem={editItem}
+    <div className="app">
+      <h2>Seguimiento de Calificaciones de Estudiantes</h2>
+      <AverageDisplay students={students} />
+      <StudentForm onAdd={addStudent} />
+      <StudentsTable 
+        students={students} 
+        onDelete={deleteStudent} 
+        onEdit={editStudent} 
       />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
