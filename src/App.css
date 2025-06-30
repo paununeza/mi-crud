@@ -1,7 +1,7 @@
 /* Estilos generales */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7f9fb;
+  background-color: #fbf7f7;
   margin: 0;
   padding: 0;
 }
@@ -19,14 +19,23 @@ h1 {
 
 h2 {
   margin-bottom: 10px;
+  color: #333;
+}
+
+h3 {
+  text-align: center;
+  color: #4c6baf;
 }
 
 /* Formulario */
 .form-container {
-  background-color: #fdfdfd;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;            /* Ocupará todo el ancho disponible */
+  max-width: 400px;       /* Límite máximo */
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .form-group {
@@ -44,6 +53,8 @@ h2 {
   width: 100%;
   padding: 6px;
   margin-top: 2px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
 }
 
 .form-buttons {
@@ -56,10 +67,11 @@ h2 {
   border-radius: 4px;
   color: white;
   cursor: pointer;
+  width: 100%;
 }
 
 .add-button {
-  background-color: #4caf50;
+  background-color: #4c6baf;
 }
 
 .cancel-button {
@@ -146,8 +158,8 @@ h2 {
 }
 
 .edit-button {
-  background-color: #facc15;
-  color: #333;
+  background-color: #f0c001;
+  color: #ffffff;
 }
 
 .edit-button.active {
@@ -162,17 +174,6 @@ h2 {
 .card-buttons button:hover {
   opacity: 0.9;
 }
-
-/*
-.edit-button:hover  {
-  color: #ffffff;
-  background-color: #357cff;
-}
-.delete-button:hover {
-  color: white;
-  background-color: #357cff;
-}
-*/
 
 /* Mensaje vacío */
 .empty-message {
