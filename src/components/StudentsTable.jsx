@@ -7,7 +7,7 @@ function getApreciacion(grade) {
   } else if (grade >= 5.6 && grade <= 6.4) {
     return { text: 'Buen trabajo', className: 'bueno' }
   } else if (grade >= 6.5 && grade <= 7.0) {
-    return { text: 'Destacado', className: 'destacado' }
+    return { text: '✦︎ Destacado ✦︎', className: 'destacado' }
   } else {
     return { text: 'Sin datos', className: 'sin-datos' }
   }

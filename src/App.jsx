@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Evaluación de Alumnos</h1>
+      <h1>⋆.˚ Evaluación de Alumnos ˚.⋆</h1>
       <StudentForm 
         onSubmit={addOrUpdateStudent} 
         student={studentToEdit !== null ? students[studentToEdit] : null}
