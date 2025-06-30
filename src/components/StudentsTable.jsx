@@ -1,4 +1,5 @@
-
+// Recibe una nota y devuelve un objeto con un texto descriptivo 
+// y una clase CSS según el rango de la nota. 
 function getApreciacion(grade) {
   if (grade >= 1 && grade <= 3.9) {
     return { text: 'Deficiente', className: 'deficiente' }
@@ -12,7 +13,8 @@ function getApreciacion(grade) {
     return { text: 'Sin datos', className: 'sin-datos' }
   }
 }
-
+// Componente que muestra una tabla de estudiantes con sus evaluaciones
+// Permite eliminar y editar evaluaciones
 function StudentsTable({ students, onDelete, onEdit, editingIndex }) {
   return (
     <div className="evaluaciones-container">
