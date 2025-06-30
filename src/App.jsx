@@ -1,7 +1,7 @@
+import './App.css'
 import { useState, useEffect } from 'react'
 import StudentForm from './components/StudentForm'
 import StudentsTable from './components/StudentsTable'
-import AverageDisplay from './components/AverageDisplay'
 
 function App() {
   const [students, setStudents] = useState(() => {
@@ -9,35 +9,52 @@ function App() {
     return saved ? JSON.parse(saved) : []
   })
 
+  const [studentToEdit, setStudentToEdit] = useState(null)
+
   useEffect(() => {
     localStorage.setItem('students', JSON.stringify(students))
   }, [students])
 
-  const addStudent = (student) => {
-    setStudents([...students, student])
+  const addOrUpdateStudent = (student) => {
+    if (studentToEdit !== null) {
+      const updated = students.map((s, i) =>
+        i === studentToEdit ? student : s
+      )
+      setStudents(updated)
+      setStudentToEdit(null)
+    } else {
+      setStudents([...students, student])
+    }
   }
 
   const deleteStudent = (index) => {
     const newStudents = [...students]
     newStudents.splice(index, 1)
     setStudents(newStudents)
+    if (studentToEdit === index) setStudentToEdit(null)
   }
 
-  const editStudent = (index, updatedStudent) => {
-    const newStudents = [...students]
-    newStudents[index] = updatedStudent
-    setStudents(newStudents)
+  const startEdit = (index) => {
+    setStudentToEdit(index)
+  }
+
+  const cancelEdit = () => {
+    setStudentToEdit(null)
   }
 
   return (
     <div className="app">
-      <h2>Seguimiento de Calificaciones de Estudiantes</h2>
-      <AverageDisplay students={students} />
-      <StudentForm onAdd={addStudent} />
-      <StudentsTable 
+      <h1>Evaluación de Alumnos</h1>
+      <StudentForm 
+        onSubmit={addOrUpdateStudent} 
+        student={studentToEdit !== null ? students[studentToEdit] : null}
+        onCancel={cancelEdit}
+      />
+      <StudentsTable
         students={students} 
         onDelete={deleteStudent} 
-        onEdit={editStudent} 
+        onEdit={startEdit} 
+        editingIndex={studentToEdit}
       />
     </div>
   )

@@ -1,48 +1,90 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-function StudentForm({ onAdd }) {
+function StudentForm({ onSubmit, student, onCancel }) {
   const [name, setName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [subject, setSubject] = useState('')
   const [grade, setGrade] = useState('')
+
+  useEffect(() => {
+    if (student) {
+      setName(student.name)
+      setSubject(student.subject)
+      setGrade(student.grade)
+    } else {
+      setName('')
+      setSubject('')
+      setGrade('')
+    }
+  }, [student])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     const gradeNum = parseFloat(grade)
-    if (!name || !lastName || isNaN(gradeNum) || gradeNum < 1 || gradeNum > 7) {
-      alert('Por favor, ingrese datos válidos.')
+
+    if (!name.trim() || !subject.trim() || isNaN(gradeNum) || gradeNum < 0 || gradeNum > 7) {
+      alert('Por favor, ingrese datos válidos. El promedio debe ser entre 0 y 7.')
       return
     }
 
-    onAdd({ name, lastName, grade: gradeNum })
+    onSubmit({
+      name: name.trim(),
+      subject: subject.trim(),
+      grade: gradeNum
+    })
+
     setName('')
-    setLastName('')
+    setSubject('')
     setGrade('')
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Nombre:</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} required />
+    <form className="form-container" onSubmit={handleSubmit}>
+      <h3>{student ? 'Editar Evaluación' : 'Agregar Nueva Evaluación'}</h3>
+      <div className="form-group">
+        <label>Nombre del Alumno:</label>
+        <input 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
+          required 
+        />
       </div>
-      <div>
-        <label>Apellido:</label>
-        <input value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+
+      <div className="form-group">
+        <label>Asignatura:</label>
+        <input 
+          value={subject} 
+          onChange={(e) => setSubject(e.target.value)} 
+          required 
+        />
       </div>
-      <div>
-        <label>Calificación (1.0 - 7.0):</label>
+
+      <div className="form-group">
+        <label>Promedio (0.0 - 7.0):</label>
         <input
           type="number"
           step="0.1"
-          min="1"
+          min="0"
           max="7"
           value={grade}
           onChange={(e) => setGrade(e.target.value)}
           required
         />
       </div>
-      <button type="submit">Agregar Estudiante</button>
+
+      <div className="form-buttons">
+        <button className="add-button" type="submit">
+          {student ? 'Guardar Cambios' : 'Agregar Evaluación'}
+        </button>
+        {student && (
+          <button 
+            className="cancel-button"
+            type="button"
+            onClick={onCancel}
+          >
+            Cancelar
+          </button>
+        )}
+      </div>
     </form>
   )
 }

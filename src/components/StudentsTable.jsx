@@ -1,48 +1,58 @@
-function StudentsTable({ students, onDelete, onEdit }) {
-  const handleEdit = (index) => {
-    const student = students[index]
-    const newName = prompt('Nuevo nombre:', student.name) || student.name
-    const newLastName = prompt('Nuevo apellido:', student.lastName) || student.lastName
-    const newGrade = parseFloat(prompt('Nueva calificación (1.0 - 7.0):', student.grade)) || student.grade
 
-    if (newGrade < 1 || newGrade > 7) {
-      alert('La calificación debe estar entre 1 y 7.')
-      return
-    }
-
-    onEdit(index, { name: newName, lastName: newLastName, grade: newGrade })
+function getApreciacion(grade) {
+  if (grade >= 1 && grade <= 3.9) {
+    return { text: 'Deficiente', className: 'deficiente' }
+  } else if (grade >= 4.0 && grade <= 5.5) {
+    return { text: 'Con mejora', className: 'mejora' }
+  } else if (grade >= 5.6 && grade <= 6.4) {
+    return { text: 'Buen trabajo', className: 'bueno' }
+  } else if (grade >= 6.5 && grade <= 7.0) {
+    return { text: 'Destacado', className: 'destacado' }
+  } else {
+    return { text: 'Sin datos', className: 'sin-datos' }
   }
+}
 
+function StudentsTable({ students, onDelete, onEdit, editingIndex }) {
   return (
-    <table border="1" cellPadding="8" cellSpacing="0">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Calificación</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {students.length === 0 ? (
-          <tr>
-            <td colSpan="4">No hay estudiantes</td>
-          </tr>
-        ) : (
-          students.map((s, i) => (
-            <tr key={i}>
-              <td>{s.name}</td>
-              <td>{s.lastName}</td>
-              <td>{s.grade}</td>
-              <td>
-                <button onClick={() => handleEdit(i)}>Editar</button>
-                <button onClick={() => onDelete(i)}>Eliminar</button>
-              </td>
-            </tr>
-          ))
-        )}
-      </tbody>
-    </table>
+    <div className="evaluaciones-container">
+      <h2>Evaluaciones Guardadas</h2>
+      {students.length === 0 ? (
+        <p className="empty-message">
+          No hay evaluaciones guardadas aún. ¡Agrega una!
+        </p>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {students.map((s, i) => {
+            const apreciacion = getApreciacion(s.grade)
+            return (
+              <div key={i} className="evaluacion-card">
+                <div className="evaluacion-info">
+                  <p><strong>Alumno:</strong> {s.name}</p>
+                  <p>Asignatura: {s.subject}</p>
+                  <p>Promedio: <strong>{s.grade}</strong></p>
+                  <p className={`badge ${apreciacion.className}`}>{apreciacion.text}</p>
+                </div>
+                <div className="card-buttons">
+                  <button 
+                    onClick={() => onEdit(i)}
+                    className={`edit-button ${editingIndex === i ? 'active' : ''}`}
+                  >
+                    Editar
+                  </button>
+                  <button 
+                    onClick={() => onDelete(i)}
+                    className="delete-button"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
   )
 }
 

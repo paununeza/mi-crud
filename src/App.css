@@ -1,42 +1,181 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f9fb;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
   text-align: center;
+  color: #333;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h2 {
+  margin-bottom: 10px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Formulario */
+.form-container {
+  background-color: #fdfdfd;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.form-group {
+  margin-bottom: 12px;
 }
 
-.card {
-  padding: 2em;
+.form-group label {
+  display: block;
+  margin-bottom: 4px;
+  color: #333;
+  font-weight: 500;
 }
 
-.read-the-docs {
-  color: #888;
+.form-container input {
+  width: 100%;
+  padding: 6px;
+  margin-top: 2px;
+}
+
+.form-buttons {
+  margin-top: 8px;
+}
+
+.form-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.add-button {
+  background-color: #4caf50;
+}
+
+.cancel-button {
+  background-color: #aaa;
+  margin-left: 8px;
+}
+
+/* Evaluaciones */
+.evaluaciones-container {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.evaluacion-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9fafb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.evaluacion-card p {
+  margin: 4px 0;
+}
+
+.evaluacion-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Colores de apreciación */
+.badge.deficiente {
+  background-color: rgb(255, 199, 199);
+  color: rgb(128, 4, 4);
+  font-weight: bold;
+}
+
+.badge.mejora {
+  background-color: rgb(252, 226, 178);
+  color: rgb(148, 92, 1);
+  font-weight: bold;
+}
+
+.badge.bueno {
+  background-color: rgb(210, 250, 210);
+  color: rgb(0, 80, 0);
+  font-weight: bold;
+}
+
+.badge.destacado {
+  background-color: rgb(220, 234, 255);
+  color: rgb(0, 51, 102);
+  font-weight: bold;
+}
+
+/* Botones dentro de las tarjetas */
+.card-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.card-buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.edit-button {
+  background-color: #facc15;
+  color: #333;
+}
+
+.edit-button.active {
+  background-color: rgb(181, 211, 255);
+}
+
+.delete-button {
+  background-color: #ef4444;
+  color: white;
+}
+
+.card-buttons button:hover {
+  opacity: 0.9;
+}
+
+/*
+.edit-button:hover  {
+  color: #ffffff;
+  background-color: #357cff;
+}
+.delete-button:hover {
+  color: white;
+  background-color: #357cff;
+}
+*/
+
+/* Mensaje vacío */
+.empty-message {
+  font-style: italic;
+  color: #666;
 }
